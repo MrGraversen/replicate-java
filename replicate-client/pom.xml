@@ -12,6 +12,10 @@
         <version>0.0.0</version>
     </parent>
 
+    <properties>
+        <slf4j-api.version>2.0.13</slf4j-api.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>io.github.openfeign</groupId>
@@ -20,6 +24,15 @@
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-java11</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-api.version}</version>
         </dependency>
     </dependencies>
 
