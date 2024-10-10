@@ -9,6 +9,13 @@
     <version>0.0.0</version>
     <packaging>pom</packaging>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.4</version>
+        <relativePath/>
+    </parent>
+
     <properties>
         <java.version>21</java.version>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -47,5 +54,6 @@
 
     <modules>
         <module>replicate-client</module>
+        <module>spring-boot-starter-replicate</module>
     </modules>
 </project>
