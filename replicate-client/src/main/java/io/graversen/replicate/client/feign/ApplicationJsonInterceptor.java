@@ -1,4 +1,4 @@
-package io.graversen.replicate.client.utils;
+package io.graversen.replicate.client.feign;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
