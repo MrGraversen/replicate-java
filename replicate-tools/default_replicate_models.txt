@@ -1,0 +1,7 @@
+meta/meta-llama-3-70b-instruct
+meta/meta-llama-3-8b-instruct
+thomasmol/whisper-diarization
+black-forest-labs/flux-schnell
+salesforce/blip
+stability-ai/sdxl
+openai/whisper
