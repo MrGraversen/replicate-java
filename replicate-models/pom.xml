@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>io.graversen</groupId>
+        <artifactId>replicate-java-parent</artifactId>
+        <version>0.0.0</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>replicate-models</artifactId>
+
+    <properties>
+        <jsonschema2pojo.version>1.2.2</jsonschema2pojo.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jsonschema2pojo</groupId>
+                <artifactId>jsonschema2pojo-maven-plugin</artifactId>
+                <version>${jsonschema2pojo.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourceDirectory>${project.basedir}/../replicate-tools/schemas</sourceDirectory>
+                    <targetPackage>io.graversen.replicate.models</targetPackage>
+                    <sourceType>jsonschema</sourceType>
+                    <includeGeneratedAnnotation>true</includeGeneratedAnnotation>
+                    <includeConstructors>true</includeConstructors>
+                    <includeConstructorPropertiesAnnotation>true</includeConstructorPropertiesAnnotation>
+                    <includeRequiredPropertiesConstructor>true</includeRequiredPropertiesConstructor>
+                    <includeAllPropertiesConstructor>true</includeAllPropertiesConstructor>
+                    <dateTimeType>java.time.OffsetDateTime</dateTimeType>
+                    <dateType>java.time.LocalDate</dateType>
+                    <timeType>java.time.LocalTime</timeType>
+                    <includeJsr303Annotations>true</includeJsr303Annotations>
+                    <useOptionalForGetters>false</useOptionalForGetters>
+                    <targetVersion>21</targetVersion>
+                    <useJakartaValidation>true</useJakartaValidation>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
