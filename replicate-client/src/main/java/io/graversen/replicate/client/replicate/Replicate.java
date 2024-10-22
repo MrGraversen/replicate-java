@@ -24,6 +24,11 @@ public interface Replicate {
             Object createPredictionRequest
     );
 
+    @RequestLine("GET /predictions/{prediction_id}")
+    Response getPrediction(
+            @Param("prediction_id") String predictionId
+    );
+
     default String apiVersion() {
         return "1.0.0-a1";
     }
