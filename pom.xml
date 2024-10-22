@@ -27,6 +27,21 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>io.graversen</groupId>
+                <artifactId>spring-boot-starter-replicate</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.graversen</groupId>
+                <artifactId>replicate-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.graversen</groupId>
+                <artifactId>replicate-models</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-core</artifactId>
                 <version>${feign.version}</version>
@@ -55,5 +70,6 @@
     <modules>
         <module>replicate-client</module>
         <module>spring-boot-starter-replicate</module>
+        <module>replicate-models</module>
     </modules>
 </project>
