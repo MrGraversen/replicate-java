@@ -37,11 +37,11 @@ class Llama3TokenizerTest {
     @Test
     public void fitToContextWindow_windowTooSmall() {
         final var conversation = new TextConversation(systemMessage, messages);
-        final var fittedConversation = Llama3Tokenizer.fitToContextWindow(conversation, 32);
+        final var fittedConversation = Llama3Tokenizer.fitToContextWindow(conversation, 128);
 
         assertNotNull(fittedConversation);
         assertTrue(fittedConversation.getMessages().size() < messages.size());
         assertNotEquals(messages.get(0), fittedConversation.getMessages().get(0));
-        assertEquals(messages.get(5), fittedConversation.getMessages().get(1));
+        assertEquals(messages.get(2), fittedConversation.getMessages().get(1));
     }
 }

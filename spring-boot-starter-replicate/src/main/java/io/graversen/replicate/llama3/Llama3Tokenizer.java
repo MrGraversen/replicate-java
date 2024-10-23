@@ -9,7 +9,6 @@ import lombok.experimental.UtilityClass;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 @UtilityClass
 public class Llama3Tokenizer {
@@ -48,31 +47,29 @@ public class Llama3Tokenizer {
         return Llama3Tokenizer.header(ROLE_SYSTEM);
     }
 
-    public static Llama3TextCompletion generateTextCompletion(@NonNull TextConversation conversation) {
-        final var textCompletionBuilder = new StringBuilder();
-        textCompletionBuilder
-                .append(BEGIN_OF_TEXT)
-                .append(systemHeader())
-                .append(conversation.getSystemMessage());
+    public static String tokenizeMessage(@NonNull TextMessage message) {
+        final var messageBuilder = new StringBuilder();
+        addMessageToTextCompletion(messageBuilder).accept(message);
+        return messageBuilder.toString();
+    }
 
+    public static Llama3TextCompletion generateTextCompletion(@NonNull TextConversation conversation) {
+        final var textCompletionBuilder = createBeginOfText(conversation.getSystemMessage());
         conversation.getMessages().forEach(addMessageToTextCompletion(textCompletionBuilder));
         final var textCompletion = textCompletionBuilder.toString();
         return new Llama3TextCompletion(textCompletion);
     }
 
     public static Integer approximateConversationContextSize(@NonNull TextConversation conversation, @Nullable Integer tokenSize) {
-        final var conversationPlainText = conversation.getMessages().stream()
-                .map(TextMessage::getText)
-                .collect(Collectors.joining(System.lineSeparator()));
-
-        return getTokens(conversationPlainText, tokenSize);
+        final var conversationTextCompletion = generateTextCompletion(conversation);
+        return getTokens(conversationTextCompletion.getText(), tokenSize);
     }
 
     public static TextConversation fitToContextWindow(@NonNull TextConversation conversation, @Nullable Integer contextWindowSize) {
         contextWindowSize = Objects.requireNonNullElse(contextWindowSize, DEFAULT_CONTEXT_WINDOW_SIZE);
 
-        final var systemMessage = conversation.getSystemMessage();
-        final var systemMessageTokens = getTokens(systemMessage, null);
+        final var systemMessage = createBeginOfText(conversation.getSystemMessage());
+        final var systemMessageTokens = getTokens(systemMessage.toString(), null);
         int remainingTokens = contextWindowSize - systemMessageTokens;
 
         final var messages = conversation.getMessages();
@@ -80,7 +77,8 @@ public class Llama3Tokenizer {
 
         for (int i = messages.size() - 1; i >= 0; i--) {
             final var message = messages.get(i);
-            final var messageTokens = getTokens(message.getText(), null);
+            final var tokenizedMessage = tokenizeMessage(message);
+            final var messageTokens = getTokens(tokenizedMessage, null);
 
             if (remainingTokens - messageTokens >= 0) {
                 fittedMessages.addFirst(message);
@@ -90,7 +88,7 @@ public class Llama3Tokenizer {
             }
         }
 
-        return new TextConversation(systemMessage, fittedMessages);
+        return new TextConversation(conversation.getSystemMessage(), fittedMessages);
     }
 
     Consumer<TextMessage> addMessageToTextCompletion(@NonNull StringBuilder textCompletionBuilder) {
@@ -100,8 +98,14 @@ public class Llama3Tokenizer {
                 .append(END_OF_TEXT_ID);
     }
 
-    private Integer getTokens(@NonNull String string, @Nullable Integer tokenSize) {
+    Integer getTokens(@NonNull String string, @Nullable Integer tokenSize) {
         tokenSize = Objects.requireNonNullElse(tokenSize, APPROXIMATE_CHARACTERS_PER_TOKEN);
         return string.length() / tokenSize;
+    }
+
+    StringBuilder createBeginOfText(@NonNull String systemMessage) {
+        return new StringBuilder().append(BEGIN_OF_TEXT)
+                .append(systemHeader())
+                .append(systemMessage);
     }
 }
