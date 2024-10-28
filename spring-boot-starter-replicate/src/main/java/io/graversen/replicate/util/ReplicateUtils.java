@@ -24,6 +24,7 @@ public class ReplicateUtils {
     private static final String ATTRIBUTE_ERROR = "error";
     private static final String ATTRIBUTE_STATUS = "status";
     private static final String ATTRIBUTE_OUTPUT = "output";
+    private static final String ATTRIBUTE_INPUT = "input";
     private static final String ATTRIBUTE_URLS = "urls";
     private static final String ATTRIBUTE_CANCEL_URL = "cancel";
     private static final String ATTRIBUTE_GET_URL = "get";
@@ -37,6 +38,7 @@ public class ReplicateUtils {
             final var completedAt = parseOffsetDateTime((String) responseMap.get(ATTRIBUTE_COMPLETED_AT));
             final var error = (String) responseMap.get(ATTRIBUTE_ERROR);
             final var status = (String) responseMap.get(ATTRIBUTE_STATUS);
+            final var input = responseMap.get(ATTRIBUTE_INPUT);
             final var output = responseMap.get(ATTRIBUTE_OUTPUT);
 
             final var urlsMap = (LinkedHashMap<String, Object>) responseMap.get(ATTRIBUTE_URLS);
@@ -48,7 +50,7 @@ public class ReplicateUtils {
                 urls = new PredictionUrls(cancelUrl, getUrl);
             }
 
-            final var predictionResponse = new PredictionResponse(id, version, createdAt, startedAt, completedAt, error, status, output, urls);
+            final var predictionResponse = new PredictionResponse(id, version, createdAt, startedAt, completedAt, error, status, input, output, urls);
             return Optional.of(predictionResponse);
         } catch (Exception e) {
             log.error(e.getMessage(), e);

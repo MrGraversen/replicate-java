@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 public class ReplicateFacade {
     private final @NonNull ReplicateService replicateService;
     private final @NonNull ExecutorService executorService;
-    private final @NonNull CheckPredictionStateTask checkPredictionStateTask;
+    private final @NonNull CheckAndEmitPredictionCreationTask checkAndEmitPredictionCreationTask;
     private final @NonNull PollPredictionStatusTask pollPredictionStatusTask;
     private final @NonNull EmitPredictionResponseTask emitPredictionResponseTask;
 
@@ -29,7 +29,7 @@ public class ReplicateFacade {
     ) {
         return CompletableFuture
                 .supplyAsync(doCreatePrediction(model, createPrediction), executorService)
-                .thenApplyAsync(checkPredictionStateTask, executorService)
+                .thenApplyAsync(checkAndEmitPredictionCreationTask, executorService)
                 .thenApplyAsync(pollPredictionStatusTask, executorService)
                 .whenCompleteAsync(emitPredictionResponseTask, executorService);
     }

@@ -23,6 +23,7 @@ public class PredictionResponse {
     OffsetDateTime completedAt;
     String error;
     String status;
+    Object input;
     Object output;
     PredictionUrls urls;
 
