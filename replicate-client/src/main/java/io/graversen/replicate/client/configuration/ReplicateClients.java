@@ -31,7 +31,7 @@ public class ReplicateClients {
         final UnaryOperator<Feign.Builder> feignCustomizer = feign -> feign
                 .encoder(new JacksonEncoder(objectMapper()))
                 .decoder(new JacksonDecoder())
-                .logLevel(Logger.Level.FULL)
+                .logLevel(Logger.Level.BASIC)
                 .logger(new Slf4jDebugLogger());
 
         return ReplicateClients.v1(properties, feignCustomizer);
@@ -56,7 +56,6 @@ public class ReplicateClients {
     }
 
     private static Feign.Builder feignBuilder() {
-        return Feign.builder()
-                .client(new Http2Client());
+        return Feign.builder().client(new Http2Client());
     }
 }
