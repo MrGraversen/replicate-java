@@ -39,7 +39,7 @@ jobs:
           REPLICATE_API_TOKEN: ${{ secrets.REPLICATE_API_TOKEN }}
           REPLICATE_MODELS: ${{ matrix.version.models }}
         run: |
-          cd replicate-java/replicate-tools
+          cd replicate-tools
           python download_replicate_schemas.py
 
       - name: Run Maven to generate Java models
