@@ -1,5 +1,3 @@
-# download_schemas.py
-
 import json
 import logging
 import os
@@ -19,8 +17,7 @@ OUTPUT_DIRECTORY = 'schemas'
 ENUM_SCHEMA_FILENAME = 'ReplicateModels.json'
 
 # Read API token from environment variable
-# API_TOKEN = os.getenv(API_TOKEN_ENV)
-API_TOKEN = 'r8_1lOq05n1XQM1kWQIHHQQe9bNL8sw57E3yFeOd'
+API_TOKEN = os.getenv(API_TOKEN_ENV)
 if not API_TOKEN:
     raise RuntimeError(f'Please set the {API_TOKEN_ENV} environment variable')
 
