@@ -45,7 +45,7 @@ jobs:
       - name: Run Maven to generate Java models
         run: |
           cd replicate-models
-          mvn clean install
+          mvn -B -ntp clean install
 
       - name: Deploy Maven artifact to GitHub Packages
         env:
@@ -53,5 +53,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd replicate-models
-          mvn versions:set -DnewVersion=$VERSION
-          mvn deploy
+          mvn -B versions:set -DnewVersion=$VERSION
+          mvn -B deploy
