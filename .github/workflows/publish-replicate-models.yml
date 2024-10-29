@@ -32,7 +32,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r replicate-java/replicate-tools/requirements.txt
+          pip install -r replicate-tools/requirements.txt
 
       - name: Run replicate-tools to download JSON schemas
         env:
@@ -44,7 +44,7 @@ jobs:
 
       - name: Run Maven to generate Java models
         run: |
-          cd replicate-java/replicate-models
+          cd replicate-models
           mvn clean install
 
       - name: Deploy Maven artifact to GitHub Packages
@@ -52,6 +52,6 @@ jobs:
           VERSION: ${{ github.event.release.tag_name }}-${{ matrix.version.name }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cd replicate-java/replicate-models
+          cd replicate-models
           mvn versions:set -DnewVersion=$VERSION
           mvn deploy
