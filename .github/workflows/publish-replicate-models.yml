@@ -10,8 +10,8 @@ jobs:
     strategy:
       matrix:
         version: [
-          { name: "llama3", models: "meta/meta-llama-3-8b-instruct,meta/meta-llama-3-70b-instruct" },
-          { name: "flux", models: "black-forest-labs/flux-schnell" }
+          { name: "llama3", models: "meta/meta-llama-3-8b-instruct,meta/meta-llama-3-70b-instruct,meta/meta-llama-3.1-405b-instruct" },
+          { name: "flux", models: "black-forest-labs/flux-schnell,black-forest-labs/flux-dev,black-forest-labs/flux-pro" }
         ]
 
     steps:

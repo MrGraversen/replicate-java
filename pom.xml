@@ -24,6 +24,14 @@
         <lombok.version>1.18.34</lombok.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>github-replicate-java</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/MrGraversen/replicate-java</url>
+        </repository>
+    </repositories>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
