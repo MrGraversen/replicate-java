@@ -19,7 +19,7 @@ import java.util.function.Function;
 
 @Configuration
 @EnableConfigurationProperties(ReplicateProperties.class)
-@Import({Llama3Configuration.class})
+@Import({Llama3Configuration.class, FluxConfiguration.class})
 @ComponentScan({"io.graversen.replicate.service", "io.graversen.replicate.facade"})
 public class ReplicateConfiguration {
     @Bean

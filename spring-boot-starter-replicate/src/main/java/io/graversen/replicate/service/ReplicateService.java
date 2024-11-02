@@ -42,8 +42,24 @@ public class ReplicateService {
         return doCreatePrediction(model, mappedPrediction);
     }
 
+    @SneakyThrows
+    public Optional<PredictionResponse> createPrediction(@NonNull ReplicateModel model, @NonNull CreateImagePrediction createPrediction) {
+        final var predictionMapper = predictionMappers.stream()
+                .filter(supportsImagePredictions())
+                .filter(supportsModel(model))
+                .findFirst()
+                .orElseThrow(unsupportedModelError(model));
+
+        final var mappedPrediction = predictionMapper.apply(model, createPrediction);
+        return doCreatePrediction(model, mappedPrediction);
+    }
+
     Predicate<PredictionMapper> supportsTextPredictions() {
         return predictionMapper -> predictionMapper.supportsType(PredictionTypes.TEXT);
+    }
+
+    Predicate<PredictionMapper> supportsImagePredictions() {
+        return predictionMapper -> predictionMapper.supportsType(PredictionTypes.IMAGE);
     }
 
     Predicate<PredictionMapper> supportsModel(@NonNull ReplicateModel model) {

@@ -1,6 +1,7 @@
 package io.graversen.replicate.facade;
 
 import io.graversen.replicate.common.ReplicateModel;
+import io.graversen.replicate.service.CreateImagePrediction;
 import io.graversen.replicate.service.CreateTextPrediction;
 import io.graversen.replicate.service.ReplicateService;
 import lombok.NonNull;
@@ -34,9 +35,28 @@ public class ReplicateFacade {
                 .whenCompleteAsync(emitPredictionResponseTask, executorService);
     }
 
+    public CompletableFuture<PredictionResponseAndModel> createPrediction(
+            @NonNull ReplicateModel model,
+            @NonNull CreateImagePrediction createPrediction
+    ) {
+        return CompletableFuture
+                .supplyAsync(doCreatePrediction(model, createPrediction), executorService)
+                .thenApplyAsync(checkAndEmitPredictionCreationTask, executorService)
+                .thenApplyAsync(pollPredictionStatusTask, executorService)
+                .whenCompleteAsync(emitPredictionResponseTask, executorService);
+    }
+
     Supplier<Optional<PredictionResponseAndModel>> doCreatePrediction(
             @NonNull ReplicateModel model,
             @NonNull CreateTextPrediction createPrediction
+    ) {
+        return () -> replicateService.createPrediction(model, createPrediction)
+                .map(predictionResponse -> new PredictionResponseAndModel(predictionResponse, model));
+    }
+
+    Supplier<Optional<PredictionResponseAndModel>> doCreatePrediction(
+            @NonNull ReplicateModel model,
+            @NonNull CreateImagePrediction createPrediction
     ) {
         return () -> replicateService.createPrediction(model, createPrediction)
                 .map(predictionResponse -> new PredictionResponseAndModel(predictionResponse, model));
