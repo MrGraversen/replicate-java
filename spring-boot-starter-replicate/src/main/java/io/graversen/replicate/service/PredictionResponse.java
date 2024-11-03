@@ -8,6 +8,7 @@ import lombok.Value;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -68,6 +69,15 @@ public class PredictionResponse {
     public Optional<String> getTextOutput() {
         try {
             return getOutput(output -> (ArrayList<String>) output).map(composeTextResponse());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<String> getInputKey(@NonNull String key) {
+        try {
+            final var input = (LinkedHashMap<String, Object>) getInput();
+            return Optional.of(((String) input.get(key)));
         } catch (Exception e) {
             return Optional.empty();
         }
