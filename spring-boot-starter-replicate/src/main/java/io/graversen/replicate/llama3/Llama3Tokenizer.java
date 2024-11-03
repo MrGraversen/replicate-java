@@ -6,9 +6,11 @@ import jakarta.annotation.Nullable;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.regex.Pattern;
 
 @UtilityClass
 public class Llama3Tokenizer {
@@ -58,6 +60,41 @@ public class Llama3Tokenizer {
         conversation.getMessages().forEach(addMessageToTextCompletion(textCompletionBuilder));
         final var textCompletion = textCompletionBuilder.toString();
         return new Llama3TextCompletion(textCompletion);
+    }
+
+    public static TextConversation parseTextCompletion(@NonNull String tokenizedConversation) {
+        String systemMessage = null;
+        final var messages = new ArrayList<TextMessage>();
+
+        final String[] tokens = tokenizedConversation.split(Pattern.quote(END_OF_TEXT_ID));
+
+        for (String token : tokens) {
+            token = token.trim();
+
+            if (token.isEmpty()) {
+                continue;
+            }
+
+            if (token.startsWith(BEGIN_OF_TEXT)) {
+                String systemToken = token.substring(BEGIN_OF_TEXT.length()).trim();
+                if (systemToken.startsWith(START_HEADER_ID + ROLE_SYSTEM)) {
+                    systemMessage = systemToken.substring(systemToken.indexOf(END_HEADER_ID) + END_HEADER_ID.length()).trim();
+                }
+            } else if (token.startsWith(START_HEADER_ID)) {
+                String role = token.substring(START_HEADER_ID.length(), token.indexOf(END_HEADER_ID)).trim();
+                String messageContent = token.substring(token.indexOf(END_HEADER_ID) + END_HEADER_ID.length()).trim();
+
+                if (!role.isEmpty() && !messageContent.isEmpty()) {
+                    messages.add(new TextMessage(role, messageContent));
+                }
+            }
+        }
+
+        if (systemMessage == null) {
+            throw new IllegalArgumentException("System message not found in the tokenized conversation.");
+        }
+
+        return new TextConversation(systemMessage, messages);
     }
 
     public static Integer approximateConversationContextSize(@NonNull TextConversation conversation, @Nullable Integer tokenSize) {
