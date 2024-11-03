@@ -47,7 +47,7 @@
             <dependency>
                 <groupId>io.graversen</groupId>
                 <artifactId>replicate-models</artifactId>
-                <version>${project.version}</version>
+                <version>0.0.0-default</version>
             </dependency>
             <dependency>
                 <groupId>io.github.openfeign</groupId>
