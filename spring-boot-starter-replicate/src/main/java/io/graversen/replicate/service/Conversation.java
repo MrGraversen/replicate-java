@@ -3,10 +3,8 @@ package io.graversen.replicate.service;
 import io.graversen.replicate.common.ReplicateModel;
 import io.graversen.replicate.common.TextConversation;
 import io.graversen.replicate.common.TextMessage;
-import lombok.AccessLevel;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Value;
+import io.graversen.replicate.common.TextPredictionRoles;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -45,7 +43,20 @@ public class Conversation {
         );
     }
 
+    @ToString.Include
+    public ConversationStates getState() {
+        if (conversation.getMessages().isEmpty()) {
+            return ConversationStates.IDLE;
+        }
+
+        final var isLastMessageFromUser = conversation.getLastMessage()
+                .map(message -> message.getRole().equals(TextPredictionRoles.USER.asString()))
+                .orElse(false);
+
+        return isLastMessageFromUser ? ConversationStates.WAITING_FOR_ASSISTANT : ConversationStates.WAITING_FOR_USER;
+    }
+
     private static String createId() {
-        return String.format("c_%s", UUID.randomUUID().toString());
+        return String.format("c_%s", UUID.randomUUID());
     }
 }

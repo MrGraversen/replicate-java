@@ -5,6 +5,7 @@ import lombok.Value;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Value
 public class TextConversation {
@@ -45,5 +46,9 @@ public class TextConversation {
         return messages.stream()
                 .limit(conversationSize)
                 .toList();
+    }
+
+    public Optional<TextMessage> getLastMessage() {
+        return messages.isEmpty() ? Optional.empty() : Optional.of(messages.getLast());
     }
 }

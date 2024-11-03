@@ -30,9 +30,9 @@ public class ReplicateFacade {
     ) {
         return CompletableFuture
                 .supplyAsync(doCreatePrediction(model, createPrediction), executorService)
-                .thenApplyAsync(checkAndEmitPredictionCreationTask, executorService)
-                .thenApplyAsync(pollPredictionStatusTask, executorService)
-                .whenCompleteAsync(emitPredictionResponseTask, executorService);
+                .thenApply(checkAndEmitPredictionCreationTask)
+                .thenApply(pollPredictionStatusTask)
+                .whenComplete(emitPredictionResponseTask);
     }
 
     public CompletableFuture<PredictionResponseAndModel> createPrediction(
@@ -41,9 +41,9 @@ public class ReplicateFacade {
     ) {
         return CompletableFuture
                 .supplyAsync(doCreatePrediction(model, createPrediction), executorService)
-                .thenApplyAsync(checkAndEmitPredictionCreationTask, executorService)
-                .thenApplyAsync(pollPredictionStatusTask, executorService)
-                .whenCompleteAsync(emitPredictionResponseTask, executorService);
+                .thenApply(checkAndEmitPredictionCreationTask)
+                .thenApply(pollPredictionStatusTask)
+                .whenComplete(emitPredictionResponseTask);
     }
 
     Supplier<Optional<PredictionResponseAndModel>> doCreatePrediction(
