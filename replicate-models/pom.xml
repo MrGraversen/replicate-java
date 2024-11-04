@@ -11,7 +11,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>replicate-models</artifactId>
-    <version>${project.version}-default</version> <!-- Setting version tag explicitly to allow override -->
+    <version>0.0.0-default</version> <!-- Setting version tag explicitly to allow override -->
 
     <properties>
         <jsonschema2pojo.version>1.2.2</jsonschema2pojo.version>
