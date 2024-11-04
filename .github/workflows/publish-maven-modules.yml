@@ -1,0 +1,36 @@
+name: Generate Project Maven Modules
+
+on:
+  release:
+    types: [ created ]
+
+jobs:
+  generate-modules:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Run Maven to generate Java models
+        run: |
+          mvn -B -ntp clean install -pl '!replicate-models'
+
+      - name: Deploy Maven artifact to GitHub Packages
+        env:
+          VERSION: ${{ github.event.release.tag_name }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mvn -B versions:set -DnewVersion=$VERSION
+          mvn -B deploy -pl '!replicate-models'
