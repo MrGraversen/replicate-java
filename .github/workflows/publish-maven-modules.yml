@@ -35,14 +35,11 @@ jobs:
           cd replicate-tools
           python download_replicate_schemas.py
 
-      - name: Run Maven to generate Java models
-        run: |
-          mvn -B -ntp clean install
-
-      - name: Deploy Maven artifact to GitHub Packages
+      - name: Run Maven to generate modules & Deploy Maven artifacts to GitHub Packages
         env:
           VERSION: ${{ github.event.release.tag_name }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          mvn -B versions:set -DnewVersion=$VERSION
-          mvn -B deploy -pl '!replicate-models'
+          mvn -B -ntp versions:set -DnewVersion=$VERSION
+          mvn -B -ntp clean install
+          mvn -B -ntp deploy -pl '!replicate-models'
