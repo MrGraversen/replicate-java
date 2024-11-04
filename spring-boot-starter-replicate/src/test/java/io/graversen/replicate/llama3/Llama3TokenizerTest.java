@@ -20,14 +20,14 @@ class Llama3TokenizerTest {
     );
 
     @Test
-    void parseTextCompletion_exampleConversation() {
+    void parseTextCompletion_exampleConversation1() {
         final var tokenizedConversation =
-                "<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n" +
-                "You are a helpful assistant.<|eot_id|><|start_header_id|>user<|end_header_id|>\n" +
-                "Hello. How are you?<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n" +
-                "Hello! I'm doing great, thanks for asking! I'm here to help you with anything you need, so please feel free to ask me any questions or share what's on your mind. How about you? How's your day going so far?<|eot_id|><|start_header_id|>user<|end_header_id|>\n" +
-                "It is going good thanks<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n" +
-                "That's wonderful to hear! I'm glad to know that your day is going well. If you don't mind me asking, what's been the highlight of your day so far? Is there anything exciting or interesting that's happened? I'm all ears and happy to listen!<|eot_id|><|start_header_id|>user<|end_header_id|>\n" +
+                "<|begin_of_text|><|start_header_id|>system<|end_header_id|>" +
+                "You are a helpful assistant.<|eot_id|><|start_header_id|>user<|end_header_id|>" +
+                "Hello. How are you?<|eot_id|><|start_header_id|>assistant<|end_header_id|>" +
+                "Hello! I'm doing great, thanks for asking! I'm here to help you with anything you need, so please feel free to ask me any questions or share what's on your mind. How about you? How's your day going so far?<|eot_id|><|start_header_id|>user<|end_header_id|>" +
+                "It is going good thanks<|eot_id|><|start_header_id|>assistant<|end_header_id|>" +
+                "That's wonderful to hear! I'm glad to know that your day is going well. If you don't mind me asking, what's been the highlight of your day so far? Is there anything exciting or interesting that's happened? I'm all ears and happy to listen!<|eot_id|><|start_header_id|>user<|end_header_id|>" +
                 "Nah fam<|eot_id|>";
 
         final var conversation = Llama3Tokenizer.parseTextCompletion(tokenizedConversation);
@@ -49,6 +49,32 @@ class Llama3TokenizerTest {
 
         assertEquals("user", conversation.getMessages().get(4).getRole());
         assertEquals("Nah fam", conversation.getMessages().get(4).getText());
+    }
+
+    @Test
+    void parseTextCompletion_exampleConversation2() {
+        final var tokenizedConversation =
+                "<|begin_of_text|><|start_header_id|>system<|end_header_id|>You are a calculator app. Respond only with the result of the math query.<|eot_id|><|start_header_id|>user<|end_header_id|>What is 2 + 2?<|eot_id|><|start_header_id|>assistant<|end_header_id|>4<|eot_id|><|start_header_id|>user<|end_header_id|>What is 3 * 3?<|eot_id|><|start_header_id|>assistant<|end_header_id|>9<|eot_id|><|start_header_id|>user<|end_header_id|>What is seven minus two?<|eot_id|>";
+
+        final var conversation = Llama3Tokenizer.parseTextCompletion(tokenizedConversation);
+
+        assertEquals("You are a calculator app. Respond only with the result of the math query.", conversation.getSystemMessage());
+        assertEquals(5, conversation.getMessages().size());
+
+        assertEquals("user", conversation.getMessages().get(0).getRole());
+        assertEquals("What is 2 + 2?", conversation.getMessages().get(0).getText());
+
+        assertEquals("assistant", conversation.getMessages().get(1).getRole());
+        assertEquals("4", conversation.getMessages().get(1).getText());
+
+        assertEquals("user", conversation.getMessages().get(2).getRole());
+        assertEquals("What is 3 * 3?", conversation.getMessages().get(2).getText());
+
+        assertEquals("assistant", conversation.getMessages().get(3).getRole());
+        assertEquals("9", conversation.getMessages().get(3).getText());
+
+        assertEquals("user", conversation.getMessages().get(3).getRole());
+        assertEquals("What is seven minus two?", conversation.getMessages().get(3).getText());
     }
 
     @Test

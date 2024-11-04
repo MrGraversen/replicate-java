@@ -143,6 +143,7 @@ public class Llama3Tokenizer {
     StringBuilder createBeginOfText(@NonNull String systemMessage) {
         return new StringBuilder().append(BEGIN_OF_TEXT)
                 .append(systemHeader())
-                .append(systemMessage);
+                .append(systemMessage)
+                .append(END_OF_TEXT_ID);
     }
 }
