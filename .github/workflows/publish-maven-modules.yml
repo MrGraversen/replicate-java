@@ -23,9 +23,21 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r replicate-tools/requirements.txt
+
+      - name: Run replicate-tools to download JSON schemas
+        env:
+          REPLICATE_API_TOKEN: ${{ secrets.REPLICATE_API_TOKEN }}
+        run: |
+          cd replicate-tools
+          python download_replicate_schemas.py
+
       - name: Run Maven to generate Java models
         run: |
-          mvn -B -ntp clean install -pl '!replicate-models'
+          mvn -B -ntp clean install
 
       - name: Deploy Maven artifact to GitHub Packages
         env:
