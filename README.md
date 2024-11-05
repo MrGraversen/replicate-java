@@ -174,7 +174,6 @@ public class LlamaConversationExample {
     private BiConsumer<Conversation, Throwable> logConversation() {
         return (conversation, throwable) -> {
             if (throwable == null) {
-                final var x = conversationService.getById(conversation.getId());
                 log.info("{}", conversation.getConversation());
             } else {
                 log.error(throwable.getMessage(), throwable);
