@@ -16,6 +16,18 @@ public class TextToImageAspectRatio {
         return new TextToImageAspectRatio(1350, AspectRatios.RATIO_4_BY_5);
     }
 
+    public static TextToImageAspectRatio landscape() {
+        return new TextToImageAspectRatio(1350, AspectRatios.RATIO_5_BY_4);
+    }
+
+    public static TextToImageAspectRatio wide() {
+        return new TextToImageAspectRatio(1350, AspectRatios.RATIO_16_BY_9);
+    }
+
+    public static TextToImageAspectRatio ultraWide() {
+        return new TextToImageAspectRatio(1350, AspectRatios.RATIO_21_BY_9);
+    }
+
     public static TextToImageAspectRatio reel() {
         return new TextToImageAspectRatio(1920, AspectRatios.RATIO_9_BY_16);
     }

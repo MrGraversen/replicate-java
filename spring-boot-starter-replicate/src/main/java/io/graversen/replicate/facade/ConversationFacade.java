@@ -30,6 +30,10 @@ public class ConversationFacade {
         return conversation;
     }
 
+    public Function<Conversation, CompletableFuture<Conversation>> chat(@NonNull TextMessage message) {
+        return conversation -> chat(conversation.getId(), message);
+    }
+
     public CompletableFuture<Conversation> chat(@NonNull String id, @NonNull TextMessage message) {
         var conversation = conversationService.appendMessage(id, message);
 
