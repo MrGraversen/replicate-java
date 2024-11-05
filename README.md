@@ -1,6 +1,6 @@
 # Replicate AI, powered by Java 21 ☕ & Spring Boot 3 🍃
 
-Welcome to the Replicate AI Integration project! 🎉
+Welcome to the [**Replicate AI**](https://replicate.com/) Integration project! 🎉
 
 This project provides a streamlined Java 21-based framework to effortlessly interact with and create predictions for **Replicate**'s
 powerful AI models. Built with **Spring Boot**, it enables quick and modular access to various AI services, making integration a breeze for
