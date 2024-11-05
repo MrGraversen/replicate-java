@@ -1,4 +1,4 @@
-# Replicate AI, empowered by Java 21 ☕ & Spring Boot 🍃
+# Replicate AI, powered by Java 21 ☕ & Spring Boot 3 🍃
 
 Welcome to the Replicate AI Integration project! 🎉
 
