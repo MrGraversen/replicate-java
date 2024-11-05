@@ -129,7 +129,6 @@ create images and manage conversations.
 @RequiredArgsConstructor
 public class LlamaConversationExample {
     private final ConversationFacade conversationFacade;
-    private final ConversationService conversationService;
 
     /**
      * Simple example of exchanging one message with meta-llama-3-70b-instruct
