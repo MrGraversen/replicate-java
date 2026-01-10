@@ -10,9 +10,9 @@ jobs:
     strategy:
       matrix:
         version: [
-          { name: "default", models: "meta/meta-llama-3-8b-instruct,meta/meta-llama-3-70b-instruct,meta/meta-llama-3.1-405b-instruct,black-forest-labs/flux-schnell,black-forest-labs/flux-dev,black-forest-labs/flux-pro" },
-          { name: "llama3", models: "meta/meta-llama-3-8b-instruct,meta/meta-llama-3-70b-instruct,meta/meta-llama-3.1-405b-instruct" },
-          { name: "flux", models: "black-forest-labs/flux-schnell,black-forest-labs/flux-dev,black-forest-labs/flux-pro" }
+          { name: "default", models: "openai/gpt-5-nano,openai/gpt-5-mini,openai/gpt-5,openai/gpt-5-pro,black-forest-labs/flux-2-dev,black-forest-labs/flux-2-flex,black-forest-labs/flux-2-pro,black-forest-labs/flux-2-max" },
+          { name: "openai", models: "openai/gpt-5-nano,openai/gpt-5-mini,openai/gpt-5,openai/gpt-5-pro" },
+          { name: "flux", models: "black-forest-labs/flux-2-dev,black-forest-labs/flux-2-flex,black-forest-labs/flux-2-pro,black-forest-labs/flux-2-max" }
         ]
 
     steps:

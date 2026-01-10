@@ -63,7 +63,7 @@ create and maintain stateful conversations.
 
 ## 📂 Module Overview
 
-Below is a more focused description of each discrete module of this project.
+Below is a more focused description regarding each discrete module of this project.
 
 ### `replicate-client`
 
