@@ -13,5 +13,4 @@ public class CreateImagePrediction {
     private final @Nullable Integer outputs;
     private final @Nullable Integer inferenceSteps;
     private final @Nullable Integer seed;
-
 }

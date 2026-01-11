@@ -34,4 +34,8 @@ public enum AspectRatios {
     public String getAspectRatio() {
         return widthRatio + ":" + heightRatio;
     }
+
+    public static AspectRatios defaultValue() {
+        return RATIO_1_BY_1;
+    }
 }

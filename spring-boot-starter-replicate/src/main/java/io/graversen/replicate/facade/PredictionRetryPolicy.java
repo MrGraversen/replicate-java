@@ -22,6 +22,6 @@ public class PredictionRetryPolicy {
     }
 
     public static PredictionRetryPolicy defaultPolicy() {
-        return new PredictionRetryPolicy(50, Duration.ofMillis(200));
+        return new PredictionRetryPolicy(50, Duration.ofMillis(250));
     }
 }

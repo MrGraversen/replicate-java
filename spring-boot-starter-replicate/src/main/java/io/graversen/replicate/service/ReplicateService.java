@@ -42,8 +42,20 @@ public class ReplicateService {
         return doCreatePrediction(model, mappedPrediction);
     }
 
+//    @SneakyThrows
+//    public Optional<PredictionResponse> createPrediction(@NonNull ReplicateModel model, @NonNull CreateImagePrediction createPrediction) {
+//        final var predictionMapper = predictionMappers.stream()
+//                .filter(supportsImagePredictions())
+//                .filter(supportsModel(model))
+//                .findFirst()
+//                .orElseThrow(unsupportedModelError(model));
+//
+//        final var mappedPrediction = predictionMapper.apply(model, createPrediction);
+//        return doCreatePrediction(model, mappedPrediction);
+//    }
+
     @SneakyThrows
-    public Optional<PredictionResponse> createPrediction(@NonNull ReplicateModel model, @NonNull CreateImagePrediction createPrediction) {
+    public Optional<PredictionResponse> createPrediction(@NonNull ReplicateModel model, @NonNull CreateImagePrediction2 createPrediction) {
         final var predictionMapper = predictionMappers.stream()
                 .filter(supportsImagePredictions())
                 .filter(supportsModel(model))
@@ -53,6 +65,8 @@ public class ReplicateService {
         final var mappedPrediction = predictionMapper.apply(model, createPrediction);
         return doCreatePrediction(model, mappedPrediction);
     }
+
+    // TODO Create "custom" prediction without mapping etc
 
     Predicate<PredictionMapper> supportsTextPredictions() {
         return predictionMapper -> predictionMapper.supportsType(PredictionTypes.TEXT);
