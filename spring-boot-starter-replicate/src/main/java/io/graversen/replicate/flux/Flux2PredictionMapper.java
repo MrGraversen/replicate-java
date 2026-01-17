@@ -5,7 +5,6 @@ import io.graversen.replicate.models.*;
 import io.graversen.replicate.service.CreateImagePrediction2;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
 import java.net.URI;
@@ -135,7 +134,7 @@ public class Flux2PredictionMapper extends BasePredictionMapper<CreateImagePredi
                 null,
                 null,
                 createImagePrediction.getPrompt(),
-                null,
+                "1 MP",
                 mapAspectRatio(createImagePrediction),
                 mapInputImages(createImagePrediction),
                 mapOutputFormat(createImagePrediction),
@@ -156,9 +155,7 @@ public class Flux2PredictionMapper extends BasePredictionMapper<CreateImagePredi
 
     private Integer mapSafetyTolerance(@NonNull CreateImagePrediction2 createImagePrediction) {
         if (createImagePrediction.getModerationLevel() != null) {
-            return createImagePrediction.getModerationLevel() == ModerationLevels.HIGH
-                    ? 2
-                    : 5;
+            return createImagePrediction.getModerationLevel() == ModerationLevels.HIGH ? 2 : 5;
         } else {
             return 5;
         }
